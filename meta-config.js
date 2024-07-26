@@ -1,5 +1,5 @@
 module.exports = {
-    title: `moheng`,
+    title: `moheng.blog`,
     description: `모행 팀의 기술 블로그 입니다.`,
     author: `Moheng`,
     siteUrl: `https://main--kakaotech-moheng.netlify.app/`,

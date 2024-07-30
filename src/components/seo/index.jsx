@@ -21,6 +21,10 @@ const Seo = ({ title, description}) => {
       defaultTitle={siteMetadata.title}
       meta={[
         {
+          name: "google-site-verification",
+          content: "OQRhT6zG9TZca0yG8jub37uPmCrcCYd5cXsaQGI55Ww",
+        },
+        {
           property: "og:title",
           content: title,
         },

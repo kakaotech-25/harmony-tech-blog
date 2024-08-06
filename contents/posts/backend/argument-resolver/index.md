@@ -8,7 +8,7 @@ tags:
 previewImage: spring.png
 ---
 
-> 현재 포스트는 harmony 팀 크루 ["haon"](https://github.com/msung99)이 작성했습니다.
+> 💡 현재 포스트는 harmony 팀 크루 [haon](https://github.com/msung99) 이 작성했습니다.
 
 ## Argument Resolver 를 사용하지 않는 상황
 

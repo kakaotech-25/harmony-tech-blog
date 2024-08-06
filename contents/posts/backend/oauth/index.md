@@ -82,6 +82,15 @@ Resource Server 는 Authorization Server 라고도 불린다. 사실 둘은 공�
 - `response_type` : 항상 `code` 라는 값으로 고정시킨다. 이는 카카오 로그인 시도 후 응답받는 데이터 타입이 `인가 코드(Authorization Code)` 임을 표현하는 것이다.
 - `scope` : Client(우리 서비스)가 부여받은 리소스 접근 권한으로, 카카오 서버내에 등록된 사용자의 추가 정보(생년월일, 친구목록 등) 이 리소스에 해당한다. 참고로 수집 가능한 리소스는 사용자(Resource Owner) 가 카카오 로그인시 정보 수집에 동의한 항목만 가능하다.
 
+아래는 Authorization URI 예시이다.
+
+~~~java
+https://kauth.kakao.com/auth?response_type=code
+&client_id=29352735982374239857
+&redirect_uri=https://example-app.com/callback
+&scope=~(생략)
+~~~
+
 ### 4. 카카오 ID, PW 입력
 
 앞선 과정을 통해 Client(우리 서비스) 가 사용자를 Authorization URI (+ 추가 쿼리 스트링) 로 이동시켰다. 이 단계에선 Resource Owner(사용자) 에게 카카오 로그인 화면이 보일것이니, 사용자는 카카오 계정 아이디, 비밀번호를 입력하여 로그인을 시도한다.

@@ -7,6 +7,8 @@ tags:
 previewImage: lion.png
 ---
 
+> 💡 현재 포스트는 [하모니 팀 기술 블로그](https://main--kakaotech-moheng.netlify.app/backend/isolated-active/) 에 게시된 글 입니다.
+
 ## 문제 상황
 
 ![alt text](image-1.png)

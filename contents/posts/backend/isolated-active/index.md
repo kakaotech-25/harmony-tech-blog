@@ -4,7 +4,8 @@ date: "2024-08-22"
 tags:
   - Spring
   - 테스트
-previewImage: lion.png
+  - 하온
+previewImage: test.png
 ---
 
 > 💡 현재 포스트는 [하모니 팀 기술 블로그](https://main--kakaotech-moheng.netlify.app/backend/isolated-active/) 에 게시된 글 입니다.

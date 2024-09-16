@@ -4,7 +4,7 @@ date: "2024-08-22"
 tags:
   - Spring
   - 테스트
-previewImage: test.png
+previewImage: lion.png
 ---
 
 ## 문제 상황

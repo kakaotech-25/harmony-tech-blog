@@ -6,7 +6,7 @@ tags:
   - Spring
   - 하모니
   - Rest Docs
-previewImage: kakao.png
+previewImage: lion.png
 ---
 
 > 💡 현재 포스트는 harmony 팀 크루 [하온](https://github.com/msung99)이 작성했습니다.

@@ -1,6 +1,7 @@
 ---
 title: 하모니 팀의 Jacoco 도입기 (feat. 테스트 커버리지)
 date: "2024-08-27"
+writer: 하온
 tags:
   - Spring
   - 테스트
@@ -8,7 +9,7 @@ tags:
 previewImage: test.png
 ---
 
-> 💡 현재 포스트는 [하모니 팀 기술 블로그](https://main--kakaotech-moheng.netlify.app/backend/jacoco/) 에 게시된 글 입니다.
+> 💡 현재 포스트는 harmony 팀 크루 [하온](https://github.com/msung99)이 작성했습니다.
 
 
 ## 코드 커버리지(Code Coverage)

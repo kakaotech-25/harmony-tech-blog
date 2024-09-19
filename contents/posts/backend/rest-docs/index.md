@@ -1,6 +1,7 @@
 ---
 title: 하모니 팀의 Rest Docs 와 MockMvc 를 활용한 API 문서 자동화 
 date: "2024-08-17"
+writer: 하온
 tags:
   - 하온
   - Spring

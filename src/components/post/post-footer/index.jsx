@@ -1,6 +1,8 @@
 import { Link } from "gatsby";
 import React from "react";
 import styled from "styled-components";
+import { siteMetadata } from "../../../../gatsby-config";
+import Profile from "../../profile"
 
 const PostFooter = ({ previous, next }) => {
     return (
@@ -16,6 +18,13 @@ const PostFooter = ({ previous, next }) => {
                     <ButtonText>{next ? next.frontmatter.title : "Oops.. There is no contents!"}</ButtonText>
                 </PostMoveButton>
             </FooterWrapper>
+            <Profile
+                    author={siteMetadata.author}
+                    description={siteMetadata.description}
+                    keywords={siteMetadata.keywords}
+                    socialLinks={siteMetadata.socialLinks}
+                    siteUrl={siteMetadata.socialLinks}
+            />
         </div>
     );
 };
@@ -24,7 +33,7 @@ const FooterWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
 `;
 
 const More = styled.div`

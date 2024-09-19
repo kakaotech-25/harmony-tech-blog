@@ -1,0 +1,17 @@
+{
+  "Blog Input Template": {
+    "prefix": ">template",
+    "body": [
+      "---",
+      "title: '$1'",
+      "date: '2024-$2-$3'",
+      "tags:",
+      "- '$4'",
+      "previewImage: './$5'",
+      "---",
+      "> 이 블로그는 '$6'",
+      "> 현재 포스트는 harmony 팀 크루 [$7](https://github.com/$8)이 작성했습니다."
+    ],
+    "description": "blog template for handling input with readline"
+  }
+}

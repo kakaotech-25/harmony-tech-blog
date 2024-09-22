@@ -1,14 +1,15 @@
 ---
 title: HikariCP 와 데이터베이스 커넥션 풀(DBCP) 최적화 고민하기 - 이론편
 date: "2024-09-05"
+writer: 하온
 tags:
   - Spring
-  - 테스트
+  - HikariCP
   - 하온
 previewImage: database.png
 ---
 
-> 💡 이 글을 모두 읽고난 뒤, JDBC 에서 HikariCP 를 어떻게 다루는지에 대한 내용은 필자가 작성한 [JDBC 에서 데이터베이스 커넥션 풀 다루기 (feat. JDBC Driver, DataSource, HikariCP)](https://haon.blog/database/jdbc-connection-pool/) 을 참고하자.
+> 💡 이 글을 모두 읽고난 뒤, JDBC 에서 HikariCP 를 어떻게 다루는지에 대한 내용은 필자가 작성한 [JDBC 에서 데이터베이스 커넥션 풀 다루기 (feat. JDBC Driver, DataSource, HikariCP)](https://haon.blog/database/jdbc-connection-pool/) 을 참고하길 바란다.
 
 ## 데이터베이스 커넥션 
 
@@ -91,7 +92,7 @@ DBCP 사이즈를 구성할 때 사전 이해해야하는 몇가지 원칙과 �
 
 ## 마치며
 
-다음 포스트에선 JDBC Driver 와 HikariCP 를 실제로 스프링부트 애플리케이션에서 적용하는 방법에 대해 다루어보도록 한다.
+다음 포스트에선 JDBC Driver 와 HikariCP 를 실제로 스프링부트 애플리케이션에서 적용하는 방법에 대해 다루어보도록 한다. 이와 관련한 내용은 필자가 작성한 [JDBC 에서 데이터베이스 커넥션 풀 다루기 (feat. JDBC Driver, DataSource, HikariCP)](https://haon.blog/database/jdbc-connection-pool/) 을 참고하길 바란다.
 
 
 ## 참고

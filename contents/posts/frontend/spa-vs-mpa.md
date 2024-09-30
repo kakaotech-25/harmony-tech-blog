@@ -7,7 +7,7 @@ tags:
   - SPA
   - MPA
   - 리안
-previewImage: index.png
+previewImage: how.png
 ---
 
 프로젝트를 시작하기 앞서 우리 서비스에는 SPA가 적합한지 MPA가 적합한지에 대한 조사를 진행했다.

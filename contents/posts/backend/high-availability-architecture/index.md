@@ -6,7 +6,7 @@ tags:
   - 고가용성
   - 아키텍처
   - 하온 
-previewImage: kakao.png
+previewImage: lion.png
 ---
 
 ## 학습배경

@@ -1,6 +1,6 @@
 ---
 title: 컨테이너 이미지 다이어트 (mlops)
-date: "2024-09-01"
+date: "2024-09-15"
 writer: 레오
 tags:
   - Docker

@@ -6,7 +6,7 @@ tags:
   - 캐시
   - 스프링
   - 하온
-previewImage: kakao.png
+previewImage: lion.png
 ---
 
 ## 외부 API 요청이 매우 느린 문제상황

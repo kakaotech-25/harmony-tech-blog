@@ -75,7 +75,7 @@ Jemeter 의 최장점은 GUI 와 전통적인 역사 아래 풍부한 레퍼런�
 
 ![alt text](image-2.png)
 
-## 마치며
+## 참고
 
 - https://velog.io/@yongtae923/k6-vs-JMeter
 - https://seongwon.dev/ETC/20220919-%EC%84%B1%EB%8A%A5%ED%85%8C%EC%8A%A4%ED%8A%B8-%EB%B6%80%ED%95%98%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%8A%B8%EB%A0%88%EC%8A%A4%ED%85%8C%EC%8A%A4%ED%8A%B8%EB%9E%80/

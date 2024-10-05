@@ -1,6 +1,6 @@
 ---
 title: 모행 모니터링 스택 구성 가이드
-date: "2024-10-5"
+date: "2024-10-05"
 writer: 레오
 tags:
   - Docker

@@ -1,6 +1,7 @@
 ---
 title: 서버 성능 최적화를 위한 성능 테스트(Performance Test) 환경 구축
 date: "2024-10-02"
+series: backend trouble shooting
 writer: 하온
 tags:
   - 스프링

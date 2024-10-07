@@ -1,6 +1,7 @@
 ---
 title: 하모니 팀의 Jacoco 도입기 (feat. 테스트 커버리지)
 date: "2024-08-27"
+series: backend trouble shooting
 writer: 하온
 tags:
   - Spring

@@ -1,6 +1,7 @@
 ---
 title: 고가용성과 확장성을 확보하기 위한 아키텍처 전략
 date: "2024-09-25"
+series: backend trouble shooting
 writer: 하온
 tags:
   - 고가용성

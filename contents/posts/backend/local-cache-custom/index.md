@@ -1,6 +1,7 @@
 ---
 title: 스프링 로컬 캐시와 TTL 을 구현한 외부 서빙 API 요청 최적화
 date: "2024-09-29"
+series: backend trouble shooting
 writer: 하온
 tags:
   - 캐시

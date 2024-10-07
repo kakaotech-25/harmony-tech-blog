@@ -1,6 +1,7 @@
 ---
 title: JPA 의 등장배경과 SQL 중심적인 개발의 문제점
 date: "2024-09-01"
+series: backend trouble shooting
 writer: 하온
 tags:
   - Spring

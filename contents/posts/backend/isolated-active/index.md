@@ -1,6 +1,7 @@
 ---
 title: 격리된 테스트(Isolated Test) 구축과 빌드 최적화 여정 - 실전편 
 date: "2024-08-22"
+series: backend trouble shooting
 writer: 하온
 tags:
   - Spring

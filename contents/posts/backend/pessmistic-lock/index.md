@@ -1,6 +1,7 @@
 ---
 title: JPA 비관적 락(Pessimistic Lock) 을 사용한 동시성 이슈 해결기
 date: "2024-09-27"
+series: backend trouble shooting
 writer: 하온
 tags:
   - Spring

@@ -1,6 +1,7 @@
 ---
 title: 스프링에서 Argument Resolver 기반 어노테이션으로 인증 책임을 분리해보자!
 date: "2024-07-28"
+series: backend trouble shooting
 writer: 하온
 tags:
   - 스프링

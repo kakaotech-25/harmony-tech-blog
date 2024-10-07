@@ -1,6 +1,7 @@
 ---
 title: 객체지향 생활 체조 원칙, 견고한 애플리케이션을 만들기 위해
 date: "2024-08-29"
+series: backend trouble shooting
 writer: 하온
 tags:
   - Spring

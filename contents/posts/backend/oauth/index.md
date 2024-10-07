@@ -1,6 +1,7 @@
 ---
 title: OAuth 2.0 의 등장배경과 동작 메커니즘
 date: "2024-08-06"
+series: backend trouble shooting
 writer: 하온
 tags:
   - HTTP

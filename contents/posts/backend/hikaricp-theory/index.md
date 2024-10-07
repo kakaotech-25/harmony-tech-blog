@@ -1,6 +1,7 @@
 ---
 title: HikariCP 와 데이터베이스 커넥션 풀(DBCP) 최적화 고민하기 - 이론편
 date: "2024-09-05"
+series: backend trouble shooting
 writer: 하온
 tags:
   - Spring

@@ -8,7 +8,7 @@ tags:
   - OSIV
   - JPA
   - 하온
-previewImage: database.png
+previewImage: backend/osiv.png
 ---
 
 
@@ -193,7 +193,9 @@ spring:
 
 ## 참고
 
+- https://velog.io/@haron/Spring-Connection-Pool-이-부족하다고요
 - https://ykh6242.tistory.com/entry/JPA-OSIVOpen-Session-In-View%EC%99%80-%EC%84%B1%EB%8A%A5-%EC%B5%9C%EC%A0%81%ED%99%94
+- https://eastc.tistory.com/entry/DataSource-%EB%9D%BC%EC%9A%B0%ED%8C%85%EC%9D%B4-%EC%95%88%EB%90%98%EB%8A%94-%EC%9D%B4%EC%9C%A0-OSIV
 - https://cornswrold.tistory.com/337
 
 

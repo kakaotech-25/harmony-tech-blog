@@ -1,5 +1,5 @@
 ---
-title: 트랜잭션내에 커넥션을 점유하는 외부 API 요청 분리를 통한 TPS 처리량 개선기 (feat. JPA OSIV)
+title: 트랜잭션내에 커넥션을 점유하는 외부 API 요청 분리를 통한 TPS 개선기 (feat. JPA OSIV)
 date: "2024-10-11"
 series: backend trouble shooting
 writer: 하온

@@ -2,6 +2,7 @@
 title: 랭체인(2)
 date: "2024-10-25"
 writer: mindy
+series: langchain study
 tags:
   - ai
   - LangChain

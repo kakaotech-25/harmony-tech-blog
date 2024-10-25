@@ -1,6 +1,7 @@
 ---
 title: 랭체인(1)
 date: "2024-10-16"
+series: langchain study
 writer: mindy
 tags:
   - ai

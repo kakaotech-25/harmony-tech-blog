@@ -5,6 +5,7 @@ writer: mindy
 tags:
   - ai
   - LangChain
+  - mindy
 previewImage: langchain.png
 ---
 

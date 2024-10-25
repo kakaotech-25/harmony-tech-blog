@@ -75,7 +75,7 @@ os.environ['OPENAI_API_KEY'] = userdata.get('OPENAI_API_KEY')
 
 ---
 ## LCEL (LangChain Expression Language)
-LCEL은 LangChain 구성 요소를 chain하는 선언적 방식이다. 처음부터  프로토타입을 사을 production에 투입할 수 있도록 설계되었으며, 코드 변경 없이 가장 간단한 `prompt + LLM` 체인부터 100단계 이상의 복잡한 체인까지 성공적으로 production에서 실행할 수 있도록 지원한다.
+LCEL은 LangChain 구성 요소를 chain하는 선언적 방식이다. 처음부터  프로토타입을 production에 투입할 수 있도록 설계되었으며, 코드 변경 없이 가장 간단한 `prompt + LLM` 체인부터 100단계 이상의 복잡한 체인까지 성공적으로 production에서 실행할 수 있도록 지원한다.
 
 LCEL을 사용해야하는 이유는 아래와 같다.
 - first-class streaming 지원 : LCEL로 체인을 구축하면 첫 번째 토큰까지의 시간( 첫 출력이 나올 때까지의 시간)을 최적화할 수 있다. 일부 체인의 경우, LLM에서 나온 토큰을 streaming output parser로 직접 전달해 LLM 공급자가 원시 토큰을 출력하는 속도와 동일한 속도로 구문 분석된 출력 조각을 반환받을 수 있다.

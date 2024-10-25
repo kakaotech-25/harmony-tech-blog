@@ -18,11 +18,10 @@ previewImage: langchain.png
       파트너 패키지(ex. langchain-openai, langchain-anthropic 등)
 - `langchain` : 파이썬과 자바스크립트 라이브러리를 포함하며, 다양한 컴포넌트의 인터페이스와 통합, 이 컴포넌트들을 체인과 에이전트로 결합할 수 있는 기본 런타임, 체인과 에이전트의 사용 가능한 구현이 가능
 -  `langGraph` : 그래프에서 단계를 에지와 노드로 모델링한다. LLM을 사용한 상태유지가 가능한 다중 액터 애플리케이션을 구축하기 위한 라이브러리이다. LangChain과 원활하게 통합되지만 LangChain 없이도 사용할 수 있다.
-- `langServer` : LangChain 체인을 REST API로 배포
-- `langSmith` :  LLM 애플리케이션을 디버깅, 테스트, 평가, 모니터링할 수 있는 개발자 플랫폼
+- `langServer` : LangChain 체인을 REST API로 배포한다. 
+- `langSmith` :  LLM 애플리케이션을 디버깅, 테스트, 평가, 모니터링할 수 있는 개발자 플랫폼이다. 
 ![](image1.png)
     
-사진 출처 : https://python.langchain.com/v0.2/docs/concepts/#langchain-expression-language-lcel
   
 랭체인의 작동방식에 대해 알아보면 랭체인에는 6개의 모듈이 존재한다.
 - 모델 I/O
@@ -31,7 +30,7 @@ previewImage: langchain.png
     
     - prompt(prompt templates, example selectors), Language Models (LLMs, Chat models), OutputParsers
 ![](image2.png)
-    사진 출처 : https://www.samsungsds.com/kr/insights/the-concept-of-langchain.html
+    
     
 - 데이터 연결
     
@@ -39,7 +38,7 @@ previewImage: langchain.png
     
     - Document loaders, Document transformers (Text Splitters, Post retrieval), Text embedding models, Vector stores, Retrievers
 ![](image3.png)
-    사진 출처 : https://www.samsungsds.com/kr/insights/the-concept-of-langchain.html
+
     
 - chain
     
@@ -116,7 +115,6 @@ asyncio.run(run_async())
 ```
 **<입출력 type>**
 ![](image4.png)
-사진 출처 : https://www.langchain.com/
 ### LangChain을 사용한 커스텀 체인 생성
 필요한 컴포넌트를 정의하고 각각 “Runnable” 인터페이스 구현한다. 컴포넌트들을 조합하여 사용자 정의 체인 생성하고 생성된 체인을 사용하여 데이터처리 작업 수행한다. 이때 주요 메소드를 사용하여 원하는 방식으로 데이터 처리한다.
 
@@ -153,5 +151,10 @@ print()
 https://wikidocs.net/book/14314   
 https://wikidocs.net/book/14473   
 https://python.langchain.com/v0.2/docs/introduction/   
+🖼️사진 출처
+https://www.samsungsds.com/kr/insights/the-concept-of-langchain.html
+https://python.langchain.com/v0.2/docs/concepts/#langchain-expression-language-lcel
+https://www.samsungsds.com/kr/insights/the-concept-of-langchain.html
+https://www.langchain.com/
 책 : 챗 GPT와 랭체인을 활용한 LLM 기반 AI 앱 개발
 ```

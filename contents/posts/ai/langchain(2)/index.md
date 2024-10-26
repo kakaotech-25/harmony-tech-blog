@@ -28,7 +28,7 @@ llm.invoke("한국의 대표적인 관광지 3곳을 추천해주세요.")
 단순히 하나의 텍스트를 입력하는 것이 아니라, 채팅 형식의 대화를 입력하면 응답을 받을 수 있도록 되어있다. OpenAI의 Chat Completions API를 지원하기 위해 만들어진 랭체인의 모듈이 `ChatModel`이다. 사용자와의 상호작용을 통한 연속적인 대화 관리에 더 적합하다. 랭체인은 OpenAI, Cohere, Hugging Face 등 다양한 모델 제공 업체와의 통합을 지원한다. 이를 통해 개발자는 여러 소스의 ChatModels를 조합하여 활용할 수 있다. 또한, 다양한 작동 모드를 지원한다. 동기(sync), 비동기(async), 배치(batch), 스트리밍(streaming) 모드에서 모델을 사용할 수 있는 기능을 제공한다. 다양한 애플리케이션 요구사항과 트래픽 패턴에 따라 유연한 대응이 가능하다. 
 ```python
 from langchain_openai import ChatOpenAI
-from langchain.schema import AIMessage, HumanMessage, SystemMessage
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 
 chat = ChatOpenAI()
 

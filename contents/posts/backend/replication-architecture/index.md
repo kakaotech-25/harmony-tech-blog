@@ -1,6 +1,6 @@
 ---
 title: MySQL 8.0 레플리케이션 동작 과정과 아키텍처 구성 방식
-date: "2024-10-18"
+date: "2024-10-28"
 series: backend trouble shooting
 tags:
   - 데이터베이스

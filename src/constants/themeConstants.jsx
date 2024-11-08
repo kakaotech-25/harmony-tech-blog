@@ -62,7 +62,7 @@ export const LIGHT_THEME_COLORS = {
         bg: '#f7f6f2',
         text: 'black',
       },
-      a: 'dimgray',
+      a: 'black',
       li: 'black',
     },
     footer: {
@@ -152,7 +152,7 @@ export const DARK_THEME_COLORS = {
         bg: '#202020',
         text: '#e6e6e6',
       },
-      a: '#c9c9ca',
+      a: 'white',
       li: 'white',
     },
     footer: {

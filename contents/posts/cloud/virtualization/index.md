@@ -7,7 +7,7 @@ tags:
   - VM
   - hipervisor
   - cloud
-  - leo
+  - 레오
 ---
 
 # 가상화 기술의 종류

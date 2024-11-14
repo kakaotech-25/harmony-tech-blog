@@ -9,7 +9,7 @@ tags:
   - Funnel
   - 코드 재사용
   - 리안
-previewImage: how.png
+previewImage: funnel.png
 ---
 
 ## 코드 재사용성을 높여야 한다.

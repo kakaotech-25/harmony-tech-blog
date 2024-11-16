@@ -8,7 +8,7 @@ tags:
   - Grafana
   - CAdvisor
   - NodeExporter
-  - leo
+  - 레오
 previewImage: moni.png
 ---
 

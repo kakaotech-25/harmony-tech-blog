@@ -1,6 +1,7 @@
 ---
 title: Redis Pub/Sub 을 사용한 분산 환경에서 로컬 캐시 동기화
 date: "2024-11-20"
+series: backend trouble shooting
 tags:
   - redis
   - 캐시

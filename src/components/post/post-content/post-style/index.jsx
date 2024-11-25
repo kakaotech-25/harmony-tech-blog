@@ -193,6 +193,14 @@ export const HtmlWrapper = styled.div`
     color: ${props => props.theme.post.content.language.text};
     word-break: break-all;
   }
+
+  & figcaption {
+    margin-top: 5px;
+    text-align: center;
+    color: #868e96;
+    font-size: 12px;
+    font-style: italic;
+  }
 }
 `
 

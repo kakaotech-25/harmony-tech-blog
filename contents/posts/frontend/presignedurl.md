@@ -6,7 +6,7 @@ tags:
   - React
   - Next
   - Typescript
-  - AWS S#
+  - AWS S3
   - Presigned URL
   - 리안
 previewImage: s3.png

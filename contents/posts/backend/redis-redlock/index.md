@@ -1,6 +1,8 @@
 ---
 title: Redis가 제공하는 RedLock 알고리즘 간단히 살펴보기
 date: "2024-12-12"
+series: backend trouble shooting
+writer: 하온
 tags:
   - Redis
   - 동시성

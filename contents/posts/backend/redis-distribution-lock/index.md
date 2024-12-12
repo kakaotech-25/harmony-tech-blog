@@ -1,6 +1,8 @@
 ---
 title: Redis 분산 락(Distribution Lock)을 구현하여 동시성 해결하기
 date: "2024-12-11"
+series: backend trouble shooting
+writer: 하온
 tags:
   - Redis
   - 동시성

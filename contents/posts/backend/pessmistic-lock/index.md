@@ -20,10 +20,9 @@ previewImage: database.png
 
 ## Second Lost Updates Problem (두 번의 갱신 분실 문제)
 
-
 ![alt text](image-3.png)
 
-다시 한 번 동시성 이슈에 민감한 송금 관련 트랜잭션을 예시로 들어보겠다.  왜 트랜잭션 격리수준만으로는 동시성 이슈를 해결할 수 없을까? 격리수준을 높이면 결국 트랜잭션간의 고립성을 높일 수 있으므로, 절대적인 동시성 제어가 가능하지 않을까? 하지만 격리수준은 앞서 설명했듯이 동시성 제어를 위한 것이 아니라고 설명했었다.
+다시 한 번 동시성 이슈에 민감한 송금 관련 트랜잭션을 예시로 들어보겠다. 왜 트랜잭션 격리수준만으로는 동시성 이슈를 해결할 수 없을까? 격리수준을 높이면 결국 트랜잭션간의 고립성을 높일 수 있으므로, 절대적인 동시성 제어가 가능하지 않을까? 하지만 격리수준은 앞서 설명했듯이 동시성 제어를 위한 것이 아니라고 설명했었다.
 
 통장에 잔고가 1000원 있는 상황이다. 트랜잭션1이 트랜잭션2 보다 먼저 시작되었다. 트랜잭션1은 잔액 1000원을 읽어오고, 근소한 차이로 다음에 트랜잭션2 도 잔액 1000원을 읽어온다. 이어서 트랜잭션1이 잔고에 3000원을 입금하여 총 잔액을 4000원으로 업데이트하고 커밋한다. 또 이어서 트랜잭션2가 잔고에 500원을 입금할여 잔액을 입금한다. 우리의 기대라면 잔액이 1000 + 3000 + 500 = 4500원이 되어야한다. 하지만, 트랜잭션1의 입금 내역은 분실된다.
 
@@ -37,7 +36,7 @@ previewImage: database.png
 
 위와 같이 2개의 트랜잭션에서 동일한 데이터를 변경할 경우 마지막으로 커밋된 내용만이 인정되고, 먼저 커밋된 내용이 분실되는 문제를 **두번의 갱신 분실 문제 (second lost updates problem)** 라고 부른다. 이와 같이 두번의 갱신 분실 문제와 같은 경우 트랜잭션으로 처리할 수 있는 범위를 넘어선다. 따라서 별도의 방법이 필요하다.
 
-다시 본론으로 돌아가, 우리 팀은 왜 동시성 이슈를 제어하기 위해 JPA 비관적 락을 사용했는가? 
+다시 본론으로 돌아가, 우리 팀은 왜 동시성 이슈를 제어하기 위해 JPA 비관적 락을 사용했는가?
 
 ## 여행지 방문 수 기록
 
@@ -53,7 +52,7 @@ previewImage: database.png
 
 실제로 우리 팀의 Trip 엔티티 설계 코드이다. `visitedCount` 라는 컬럼으로 모든 유저가 현재 여행지에 방문한 총 방문 수를 기록하고있다. 또한 `increaseVisitedCount()` 를 사용하여 여행지 조회시 방문 수를 1증가시키도록 비즈니스 로직을 설계했다.
 
-~~~java
+```java
 @Table(name = "trip")
 @Entity
 public class Trip extends BaseEntity {
@@ -76,7 +75,7 @@ public class Trip extends BaseEntity {
 
     // ...
 }
-~~~
+```
 
 ## 문제 상황
 
@@ -92,7 +91,7 @@ public class Trip extends BaseEntity {
 
 ### 자바에서 제공하는 synchornized 로도 해결하기엔 비효율적이다.
 
-~~~java
+```java
 @Transactional
 public synchronized FindTripWithSimilarTripsResponse findWithSimilarOtherTrips(final long tripId, final long memberId) {
     final Trip trip = tripRepository.findById(tripId);
@@ -100,11 +99,11 @@ public synchronized FindTripWithSimilarTripsResponse findWithSimilarOtherTrips(f
     trip.incrementVisitedCount();
     // ...
 }
-~~~
+```
 
-자바 차원에서 제공하는 `synchorized` 로 해결하자니, 이 또한 성능한 손해를 많이 본다. 자바에선 `synchronized`  라는 키워드를 제공해, **모니터 기반으로 상호 배제(Mutual Exclusion) 기능을 제공한다.** 상호배제를 구현한 동시성 제어 방식은 공유 자원 그 자체를 사용하는 특정 `임계 영역(Critial Section)` 에 대해 동시성을 제어할 수 있다.
+자바 차원에서 제공하는 `synchorized` 로 해결하자니, 이 또한 성능한 손해를 많이 본다. 자바에선 `synchronized` 라는 키워드를 제공해, **모니터 기반으로 상호 배제(Mutual Exclusion) 기능을 제공한다.** 상호배제를 구현한 동시성 제어 방식은 공유 자원 그 자체를 사용하는 특정 `임계 영역(Critial Section)` 에 대해 동시성을 제어할 수 있다.
 
- **즉, 한 임계영역에 대해 쓰레드를 하나씩 진입시켜 작업을 수행시키는 방법으로, 베타적으로 실행된다. 하지만 이 특성 떄문에 서비스에 트래픽이 발생할 경우 심각한 성능 저하가 발생할 수 있다.**  JPA 락 메커니즘과 달리 한 엔티티에 대한 접근을 제어하는 것과 달리, synchorized 는 여행지 조회라는 로직 그 자체를 실행하는 모든 쓰레드에 대해 접근을 제어하는 것이므로, 성능상 더 손해를 입게된다.
+**즉, 한 임계영역에 대해 쓰레드를 하나씩 진입시켜 작업을 수행시키는 방법으로, 베타적으로 실행된다. 하지만 이 특성 떄문에 서비스에 트래픽이 발생할 경우 심각한 성능 저하가 발생할 수 있다.** JPA 락 메커니즘과 달리 한 엔티티에 대한 접근을 제어하는 것과 달리, synchorized 는 여행지 조회라는 로직 그 자체를 실행하는 모든 쓰레드에 대해 접근을 제어하는 것이므로, 성능상 더 손해를 입게된다.
 
 ### JPA 낙관적 락으로도 해결할 수 없다
 
@@ -118,12 +117,11 @@ public synchronized FindTripWithSimilarTripsResponse findWithSimilarOtherTrips(f
 
 ![alt text](image-4.png)
 
-(💡 24.11.12 추가) [Redis 분산 락(Distribution Lock)을 구현하여 동시성 해결하기](https://kakaotech-harmony.netlify.app/backend/redis-distribution-lock/) 자바 진영에서는 앞서 살펴보았던 **모니터 기반의 상호 배제(mutual exclusion)** 기법을 제공하는 `synchornized` 키워드를 제공한다. 하지만, 이 키워드를 사용하면 임계영역에 대한 동시 접근을 제어할 수 있지만, 문제는 단일 서버에서만 상호 배제를 보장한다는 점이다. 우리는 이를 통해, 다중화된 분산 환경에서 여러 서버의 동시성 문제를 다루기 위한 락 메커니즘이 필요함을 느낄 수 있다. 
+(💡 24.11.12 추가) [Redis 분산 락(Distribution Lock)을 구현하여 동시성 해결하기](https://kakaotech-harmony.netlify.app/backend/redis-distribution-lock/) 자바 진영에서는 앞서 살펴보았던 **모니터 기반의 상호 배제(mutual exclusion)** 기법을 제공하는 `synchornized` 키워드를 제공한다. 하지만, 이 키워드를 사용하면 임계영역에 대한 동시 접근을 제어할 수 있지만, 문제는 단일 서버에서만 상호 배제를 보장한다는 점이다. 게다가 우리에게 필요한 동시성 제어는 이미 생성된 엔티티에 대한 동시 접근을 제어하는 것이다. 즉, 임계영역이 아니라 엔티티에 대한 접근을 제어하는 것인데, 이는 꼭 분산 락이 아니더라도 JPA 락 메커니즘으로도 충분히 해결할 수 있다. 우리는 이를 통해, 다중화된 분산 환경에서 여러 서버의 동시성 문제를 다루기 위한 락 메커니즘이 필요함을 느낄 수 있다.
 
 **분산 락(Distribution Lock)** 은 다중화된 분산 환경에서 상호 배제(mutual exclusion) 기반의 락 메커니즘을 제공한다. 즉, 분산된 여러 서버들은 모두 동일한 락 제공처로부터 락을 획득하고(acquire), 해제(release)할 수 있다. 이떄 분산 환경에서 제공되는 락 타입을 분산 락이라고 하며, 락 제공처는 가장 많이 사용되는 것이 Redis, Zookeeper 등이 있다. 다시 정리하자면 분산 환경에서 여러대의 서버들은 락을 획득하기 위해 Redis 와 같은 락 제공처를 바라보며, 임계영역에 접근할 수 있는지 확인하고, 대기하고, 수행한다.
 
 우리 서비스는 단일 서버로 충분히 동작하기 때문에, 분산 락을 도입할 이유가 전혀 없다. 다만, 우리 서비스의 규모가 더 커질 경우는 충분히 분산 락이 필요할 수 있다. 향후 애플리케이션의 요구사항과 아키텍처에 따라서 Redis 분산 락의 도입을 적극 고려해보도록 한다. 이와 관련된 고민 사항은 [Redis 분산 락(Distribution Lock)을 구현하여 동시성 해결하기](https://kakaotech-harmony.netlify.app/backend/redis-distribution-lock/) 에 간단히 정리하였다.
-
 
 ## JPA 비관적 락을 사용한 동시성 이슈 해결
 
@@ -135,18 +133,18 @@ public synchronized FindTripWithSimilarTripsResponse findWithSimilarOtherTrips(f
 
 우리 팀은 아래와 같이 Repository 레이어의 여행지 조회 메소드에 비관적 락을 적용했다. 비관적 락은 LockModeType 을 `PESSIMISTIC_WRITE` 으로 지정하여 적용할 수 있다.
 
-~~~java
+```java
 @Lock(LockModeType.PESSIMISTIC_WRITE)
 @QueryHints( {@QueryHint(name = "javax.persistence.lock.timeout", value = "3000")})
 @Query("SELECT t FROM Trip t WHERE t.id IN :tripId")
 Optional<Trip> findByIdForUpdate(final Long tripId);
-~~~
+```
 
-`PESSIMISTIC_WRITE` 옵션은 아래와 같이 `FOR UPDATE` 를 추가하여 베타 락을 건다. 베타 락을 사용하여 다른 트랜잭션에 의해 읽기와 쓰기 연산이 모두 수행되지 않음을 보장한다. 
+`PESSIMISTIC_WRITE` 옵션은 아래와 같이 `FOR UPDATE` 를 추가하여 베타 락을 건다. 베타 락을 사용하여 다른 트랜잭션에 의해 읽기와 쓰기 연산이 모두 수행되지 않음을 보장한다.
 
-~~~sql
-SELECT * from trip WHERE id = ? FOR UPDATE 
-~~~
+```sql
+SELECT * from trip WHERE id = ? FOR UPDATE
+```
 
 ### 성능상 손해를 많이 볼까?
 
@@ -162,20 +160,15 @@ JPA 비관적 락을 사용할 경우 `x-lock` 을 사용하기 때문에 다른
 
 예를 들면 다음과 같은 상황이 될 수 있겠다.
 
-~~~
+```
 쓰레드 1 : A 정보를 구하고 잠금
 쓰레드 2 : B 정보를 구하고 잠금
 쓰레드 1 : B 정보를 구하려고 하지만 잠겨있음
 쓰레드 2 : A 정보를 구하려고 하지만 잠겨있
-~~~
+```
 
 이런 교착 상태를 해결하기 위한 방법으로는 락을 잡고 있는 최대 시간을 지정하기 위해, (잠금 시간 초과 설정, Setting Lock Timeout) `@QueryHints` 와 `@QueryHint` 어노테이션을 통해서 최대 시간을 3초로 지정했다.
-
-## 분산 환경으로 확장된다면, 동시성 해결이 가능할까?
-
-
 
 ## 마치며
 
 이렇게 해서 동시성 문제에 대해서 해결을 해줄 수 있게 되었다. 또한 비관적 락을 사용함으로써 발생하는 데드락 문제와 같은 것에 대해서도 대비를 해줄 수 있었다.
-

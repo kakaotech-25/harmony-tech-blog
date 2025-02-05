@@ -1,5 +1,5 @@
 ---
-title: DB 레플리케이션 환경에서 DataSource 라우팅이 안되는 이슈 해결기 😤 (feat. JPA OSIV)
+title: 데이터베이스 레플리케이션 환경에서 DataSource 라우팅이 안되는 이슈 해결기 😤 (feat. JPA OSIV)
 date: "2024-10-04"
 series: backend trouble shooting
 writer: 하온
@@ -11,19 +11,23 @@ tags:
 previewImage: backend/osiv.png
 ---
 
+> 💡 현재 포스팅은 카카오테크 하모니 팀 크루 [하온(haon)](https://github.com/msung99)이 작성했습니다.
+
 ## 데이터베이스 레플리케이션을 통한 쿼리 성능 개선
 
 ![alt text](image-5.png)
 
-최근에 [MySQL 8.0 레플리케이션과 스프링부트 DataSource 라우팅을 통한 부하 분산](https://haon.blog/database/replication-mysql-springboot/) 에서 MySQL 과 스프링부트 환경으로 레플리케이션 환경을 구축하는 방법에 대해 실습을 다루었다. 레플리케이션을 직접 우리 서비스에 구축하기 전까지는 크게 어려움이 없을 것이라고 생각했다.
+지난 [MySQL 8.0 레플리케이션과 스프링부트 DataSource 라우팅을 통한 부하 분산](https://haon.blog/database/replication-mysql-springboot/) 에서 MySQL 과 스프링부트 환경으로 레플리케이션 환경을 구축하는 방법에 대해 실습을 다루었다. 이 포스팅을 작성 후 클라우드 팀원들에게 공유하고, 데이터베이스 레플리케이션에 관하여 함께 깊이있게 학습후 서비스에 도입하는 과정을 거쳤다. 팀원들과 직접 우리 서비스에 구축하기 전까지는 크게 어려움이 없을 것이라고 생각했다.
 
-하지만, 막상 우리 모행 서비스에 레플리케이션을 적용할 때 DataSource 라우팅이 되지 않아서 생각보다 많은 트러블슈팅을 만났다. 하나는 `TransactionSynchronizationManager` 동기화 이슈문제이었고, 다른 하나는 `JPA OSIV` 관련 이슈이다. 이번 포스팅에선 후자인 OSIV 관련 DataSource 라우팅에 대해 다루어보고자 한다.
+하지만, 막상 우리 모행 서비스에 레플리케이션을 적용할 때 Multi DataSource 라우팅이 되지 않아서 생각보다 꽤 어려운 트러블슈팅들을 마주했다. 하나는 `TransactionSynchronizationManager` 의 트랜잭션 상태 동기화 이슈문제이었고, 다른 하나는 `JPA OSIV` 관련 이슈이다. 이번 포스팅에선 후자인 OSIV 관련 DataSource 라우팅 관련 트러블슈팅 대해 공유해보고자 한다. 😎
 
-## 문제 상황
+## 👿 문제 상황
 
-[MySQL 8.0 레플리케이션과 스프링부트 DataSource 라우팅을 통한 부하 분산](https://haon.blog/database/replication-mysql-springboot/) 포스팅을 작성할 때는 간단한 새로운 프로젝트를 별도로 만들어서 학습을 진행했기 때문에 큰 문제없이 레플리케이션 적용에 성공했다. 하지만 문제는 레플리케이션을 모행 서비스에 적용할 때 DataSource 라우팅이 동작하지 않는다는 점이다. **기대와 달리 트랜잭션 내의 쿼리들이 Source, Replica 서버로 분산되지 않고,** `readOnly=false` **로 설정된 서비스 메소드 트랜잭션 쿼리가 레플리카(읽기 전용) 서버로 날아갔다.** Multi DataSource 를 다루어보는 것이 이번이 처음인데, 처음에 예상했던 것에 비해 데이터베이스와 Spring JPA 에 대한 꽤 높은 이해도가 필요했다. 도대체 DataSource 라우팅이 되지 않는 근본적인 원인이 무엇이었을까?
+[MySQL 8.0 레플리케이션과 스프링부트 DataSource 라우팅을 통한 부하 분산](https://haon.blog/database/replication-mysql-springboot/) 포스팅을 작성할 때는 간단한 새로운 프로젝트를 별도로 만들어서 학습을 진행했기 때문에 큰 문제없이 레플리케이션 적용에 성공했다. 하지만 문제는 레플리케이션을 모행 서비스에 적용할 때 DataSource 라우팅이 동작하지 않는다는 점이다. **기대와 달리 트랜잭션 내의 쿼리들이 Source, Replica 서버로 분산되지 않고,** `readOnly=true` **로 설정된 서비스 메소드 트랜잭션 쿼리가 Source(쓰기 전용) 서버로 날아갔다.** Multi DataSource 를 다루어보는 것이 이번이 처음인데, 처음에 예상했던 것에 비해 데이터베이스와 Spring JPA 에 대한 꽤나 깊이있는 이해도가 필요했다. 도대체 DataSource 라우팅이 되지 않는 근본적인 원인이 무엇이었을까?
 
 ## 🤔 그렇다고 DataSource 라우팅이 모든 메소드에서 안되는건 아니다!?
+
+백문이 불여일타. 어떤 문제 상황인지 간단히 파악하는 것 보다, 직접 코드를 어떻게 구현했는지 이해하는 것이 중요하다. 지금부터 우리 팀이 어떻게 코드를 구현했는지 자세히 알아보고, 어떤 해결과정을 거쳤는지 살펴보자.
 
 여러 시도를 해보던중, 재밌는 점 하나를 발견했다. 요상하게도 모든 서비스 메소드에서 DataSource 라우팅이 안되는 것은 아니고, 일부 로직에선 라우팅이 정상 수행되고 있다는 점이다. **신기하게도, 로그인이 필요없이 비회원도 이용할 수 있는 API 콜에 대해선 DataSource 타깃이 정상적으로 선택되고 라우팅이 수행되었다.** 다시말해, 로그인이 필요한 대부분의 로직에선 DataSource 분기 처리가 되지 않고있었다.
 
@@ -84,7 +88,7 @@ public class AuthService {
 
 ### 🔑 DataSource 라우팅이 안되는 근본적인 원인을 찾기위해
 
-Argument Resolver 에서 호출되는 `extractMemberId()` 의 트랜잭션 읽기/쓰기 옵션에 따라 DataSource 가 결정된다는 요상한 사실은 발견했으나, 근본적인 문제 해결에 대한 해결책을 찾지 못하여 며칠동안 많은 삽질을 했다. 끝내 문제를 해결하지 못하고 끙끙 앓던 중, 카카오테크 교육자인 퍼실리테이터 유주(yuzu) 에게 도움을 요청했다. 그 결과, **DataSource 라우팅이 되지 않는 근본적인 원인은 JPA OSIV(Open Session In View) 라는 점을 알게 되었다.** (유주 땡큐 😉) 도대체 JPA OSIV 가 무엇이길래 DataSource 라우팅이 안되도록 괴롭힌것일까? 🤔
+Argument Resolver 에서 호출되는 `extractMemberId()` 의 트랜잭션 읽기/쓰기 옵션에 따라 DataSource 가 결정된다는 요상한 사실은 발견했으나, 근본적인 문제 해결에 대한 해결책을 찾지 못하여 며칠동안 많은 삽질을 했다. 끝내 문제를 해결하지 못하고 끙끙 앓던 중, 카카오테크 교육자인 퍼실리테이터 유주(yuzu) 에게 도움을 요청했다. 그 결과, **DataSource 라우팅이 되지 않는 근본적인 원인은 JPA OSIV(Open Session In View) 라는 점을 알게 되었다.** (유주 땡큐 😉) 유주는 문제를 보자마자 **OSIV(Open Session In View)** 문제라는 것을 발견했다. 도대체 JPA OSIV 가 무엇이길래 DataSource 라우팅이 안되도록 괴롭힌것일까? 🤔
 
 ### OSIV (Open Session In View) 란 무엇인가?
 
@@ -199,6 +203,7 @@ spring:
 
 ## 참고
 
+- 자바 ORM 표준 JPA 프로그래밍, 김영한
 - https://velog.io/@haron/Spring-Connection-Pool-이-부족하다고요
 - https://ykh6242.tistory.com/entry/JPA-OSIVOpen-Session-In-View%EC%99%80-%EC%84%B1%EB%8A%A5-%EC%B5%9C%EC%A0%81%ED%99%94
 - https://eastc.tistory.com/entry/DataSource-%EB%9D%BC%EC%9A%B0%ED%8C%85%EC%9D%B4-%EC%95%88%EB%90%98%EB%8A%94-%EC%9D%B4%EC%9C%A0-OSIV

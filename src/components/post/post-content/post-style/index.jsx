@@ -10,7 +10,7 @@ export const HtmlWrapper = styled.div`
   section > h1 {
     font-size: 1.8rem;
     color: ${props => props.theme.post.content.text};
-    margin-top: 70px;
+    margin-top: 40px;
     margin-bottom: 20px;
     word-break: break-all;
     font-weight: 700;
@@ -20,7 +20,7 @@ export const HtmlWrapper = styled.div`
   section > h2 {
     font-size: 1.45rem;
     color: ${props => props.theme.post.content.text};
-    margin-top: 70px;
+    margin-top: 40px;
     margin-bottom: 20px;
     word-break: break-all;
     font-weight: 700;
@@ -30,7 +30,7 @@ export const HtmlWrapper = styled.div`
   section > h3 {
     font-size: 1.25rem;
     color: ${props => props.theme.post.content.text};
-    margin-top: 70px;
+    margin-top: 40px;
     margin-bottom: 20px;
     word-break: break-all;
     font-weight: 700;

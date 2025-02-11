@@ -1,12 +1,13 @@
 ---
 title: Jenkin와 Nginx를 활용한 Blue/Green 무중단 배포 도입기
 date: "2024-11-18"
+series: backend trouble shooting
 tags:
   - 무중단배포
   - 블루그린
   - Jenkins
   - Nginx
-previewImage: network.png
+previewImage: jenkins.png
 ---
 
 > 현재 포스팅은 카카오테크 하모니 팀 크루 [하온(haon)](https://github.com/msung99) 이 작성했습니다.

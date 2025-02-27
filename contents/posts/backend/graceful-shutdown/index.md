@@ -1,6 +1,6 @@
 ---
 title: 무중단 배포 환경에서 구버전 프로세스를 안전하게 종료해보자!(feat. Graceful Shutdown)
-date: "2024-12-08"
+date: "2025-01-14"
 series: backend trouble shooting
 tags:
   - 무중단배포

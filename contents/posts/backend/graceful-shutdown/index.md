@@ -4,7 +4,7 @@ date: "2024-12-08"
 series: backend trouble shooting
 tags:
   - 무중단배포
-  -
+  - 운영체제
 previewImage: jenkins.png
 ---
 
